@@ -36,4 +36,4 @@ jobs:
           fi
 
           git commit -m "Atualização diária automática"
-          git push
+          git push --force
