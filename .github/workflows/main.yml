@@ -2,7 +2,7 @@ name: Atualizar EPG Corrigido
 
 on:
   schedule:
-    - cron: '0 4 * * *'  # Corre todos os dias às 4h UTC
+    - cron: '0 4 * * *'  # todos os dias às 04:00 UTC (05:00 em Portugal)
   workflow_dispatch:
 
 jobs:
@@ -10,34 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repositorio
+      - name: Checkout repositório
         uses: actions/checkout@v3
 
       - name: Instalar Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.10'
 
-      - name: Instalar dependências
-        run: pip install requests
-
-      - name: Executar script para corrigir EPG
-        run: python epg_script.py
-
-      - name: Commit and push do epg corrigido
+      - name: Executar script de ajuste
         run: |
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "github-actions"
+          pip install lxml
+          python ajustar_epg.py
 
-          if [ -f epg_corrigido.xml ]; then
-            git add epg_corrigido.xml
-            if git diff --cached --quiet; then
-              echo "Sem alterações. A sair com sucesso."
-              exit 0
-            fi
-            git commit -m "Atualizar EPG corrigido automaticamente"
-            git push
-          else
-            echo "Ficheiro epg_corrigido.xml não existe. A sair com sucesso."
+      - name: Commit e Push do EPG corrigido
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'actions@github.com'
+
+          git add epg_corrigido.xml
+
+          if git diff --cached --quiet; then
+            echo "Sem alterações. A sair com sucesso."
             exit 0
           fi
+
+          git commit -m "Atualização diária automática"
+          git push
