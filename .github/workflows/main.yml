@@ -2,12 +2,13 @@ name: Atualizar EPG Corrigido
 
 on:
   schedule:
-    - cron: '0 4 * * *'
+    - cron: '0 4 * * *'  # Corre todos os dias às 4h UTC
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repositorio
         uses: actions/checkout@v3
@@ -27,7 +28,14 @@ jobs:
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "github-actions"
-          git add epg_corrigido.xml || exit 0
+
+          if [ -f epg_corrigido.xml ]; then
+            git add epg_corrigido.xml
+          else
+            echo "Ficheiro epg_corrigido.xml não existe. A sair."
+            exit 0
+          fi
+
           git diff --cached --quiet && echo "Sem alterações. A sair com sucesso." && exit 0
           git commit -m "Atualizar EPG corrigido automaticamente"
           git push
