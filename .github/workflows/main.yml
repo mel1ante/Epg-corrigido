@@ -31,6 +31,11 @@ jobs:
           git fetch origin main
           git reset --hard origin/main
 
+          if [ ! -f epg_corrigido.xml ]; then
+            echo "Ficheiro epg_corrigido.xml não existe. A sair com sucesso."
+            exit 0
+          fi
+
           git add epg_corrigido.xml
 
           if git diff --cached --quiet; then
