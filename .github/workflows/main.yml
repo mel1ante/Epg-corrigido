@@ -1,9 +1,33 @@
+name: Atualizar EPG Corrigido
 
-- name: Commit and push do epg corrigido
-  run: |
-    git config --global user.email "github-actions@github.com"
-    git config --global user.name "github-actions"
-    git add epg_corrigido.xml || exit 0
-    git diff --cached --quiet && echo "Sem alterações. A sair com sucesso." && exit 0
-    git commit -m "Atualizar EPG corrigido automaticamente"
-    git push
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v3
+
+      - name: Instalar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Instalar dependências
+        run: pip install requests
+
+      - name: Executar script para corrigir EPG
+        run: python epg_script.py
+
+      - name: Commit and push do epg corrigido
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "github-actions"
+          git add epg_corrigido.xml || exit 0
+          git diff --cached --quiet && echo "Sem alterações. A sair com sucesso." && exit 0
+          git commit -m "Atualizar EPG corrigido automaticamente"
+          git push
