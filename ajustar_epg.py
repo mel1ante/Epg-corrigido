@@ -15,10 +15,10 @@ with gzip.open("epg_ripper_PT1.xml.gz", "rb") as f:
 
 root = tree.getroot()
 
-# Função para somar 1 minuto
+# Função para somar 1 minuto e 1 segundo
 def ajustar_tempo(valor):
     dt = datetime.strptime(valor, "%Y%m%d%H%M%S %z")
-    dt += timedelta(minutes=1)
+    dt += timedelta(minutes=1, seconds=1)
     return dt.strftime("%Y%m%d%H%M%S %z")
 
 # Corrigir tempos dos <programme>
