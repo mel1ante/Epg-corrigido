@@ -20,7 +20,7 @@ jobs:
 
       - name: Executar script de ajuste
         run: |
-          pip install lxml
+          pip install requests lxml
           python ajustar_epg.py
 
       - name: Commit e Push do EPG corrigido
@@ -35,7 +35,7 @@ jobs:
           git add epg_corrigido.xml
 
           if git diff --cached --quiet; then
-            echo "Sem alterações. Workflow terminou com sucesso."
+            echo "Sem alterações. A sair com sucesso sem erro."
             exit 0
           fi
 
