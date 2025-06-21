@@ -26,8 +26,13 @@ for prog in root.findall("programme"):
     prog.attrib["start"] = ajustar_tempo(prog.attrib["start"])
     prog.attrib["stop"] = ajustar_tempo(prog.attrib["stop"])
 
-# Guardar mantendo a codificação e a estrutura original (sem pretty_print)
-tree.write("epg_corrigido.xml", encoding="utf-8", xml_declaration=True)
+# Guardar o XML corrigido
+with open("epg_corrigido.xml", "wb") as f:
+    tree.write(f, encoding="utf-8", xml_declaration=True)
 
-# Mensagem para forçar alteração no workflow
-print("EPG corrigido atualizado com sucesso.")
+# Comprimir o XML corrigido para .gz
+with open("epg_corrigido.xml", "rb") as f_in:
+    with gzip.open("epg_corrigido.xml.gz", "wb") as f_out:
+        f_out.writelines(f_in)
+
+print("EPG corrigido e comprimido com sucesso.")
