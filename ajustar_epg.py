@@ -28,3 +28,6 @@ for prog in root.findall("programme"):
 
 # Guardar mantendo a formatação e codificação
 tree.write("epg_corrigido.xml", encoding="utf-8", xml_declaration=True, pretty_print=True)
+
+# Forçar uma alteração mínima para garantir commit
+print("EPG corrigido gerado com sucesso.")
