@@ -35,4 +35,8 @@ with open("epg_corrigido.xml", "rb") as f_in:
     with gzip.open("epg_corrigido.xml.gz", "wb") as f_out:
         f_out.writelines(f_in)
 
+# Forçar alteração num ficheiro para garantir commit
+with open("forcar_commit.txt", "a") as f:
+    f.write(f"Atualizado em {datetime.now()}\n")
+
 print("EPG corrigido e comprimido com sucesso.")
