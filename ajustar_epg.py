@@ -26,8 +26,8 @@ for prog in root.findall("programme"):
     prog.attrib["start"] = ajustar_tempo(prog.attrib["start"])
     prog.attrib["stop"] = ajustar_tempo(prog.attrib["stop"])
 
-# Guardar mantendo a formatação e codificação
-tree.write("epg_corrigido.xml", encoding="utf-8", xml_declaration=True, pretty_print=True)
+# Guardar mantendo a codificação e a estrutura original (sem pretty_print)
+tree.write("epg_corrigido.xml", encoding="utf-8", xml_declaration=True)
 
-# Forçar uma alteração mínima para garantir commit
-print("EPG corrigido gerado com sucesso.")
+# Mensagem para forçar alteração no workflow
+print("EPG corrigido atualizado com sucesso.")
