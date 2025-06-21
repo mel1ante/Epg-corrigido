@@ -32,6 +32,7 @@ jobs:
           git fetch origin main
           git reset --hard origin/main
 
+          git add epg_corrigido.xml
           git add epg_corrigido.xml.gz
 
           if git diff --cached --quiet; then
@@ -39,5 +40,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Atualização diária automática do EPG corrigido (.gz incluído)"
+          git commit -m "Atualização diária automática do EPG corrigido (.xml e .gz)"
           git push
