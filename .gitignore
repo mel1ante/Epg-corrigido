@@ -1,3 +1,4 @@
+!epg_corrigido.xml.gz
 # Ignorar ficheiros temporários e caches
 __pycache__/
 *.pyc
